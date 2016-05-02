@@ -19,6 +19,15 @@ class Queue implements IQueue
 	/** @var bool */
 	private $sleep = TRUE;
 
+	private $curlOptions = [];
+
+
+	public function setCurlOptions(array $options){
+		$this->curlOptions = $options;
+	}
+
+
+
 	public function setLimitLoop($limitLoop)
 	{
 		$this->limitLoop = $limitLoop;
@@ -32,7 +41,7 @@ class Queue implements IQueue
 	public function download($token, $url)
 	{
 		return $this->request($token, function(GuzzleHttp\Client $client) use ($url) {
-				return $client->request('GET', $url);
+				return $client->request('GET', $url,$this->curlOptions);
 			});
 	}
 
